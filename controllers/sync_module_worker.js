@@ -813,6 +813,21 @@ SyncModuleWorker.prototype._unpublished = function* (name, unpublishedInfo) {
 SyncModuleWorker.prototype._sync = function* (name, pkg) {
   var that = this;
   var hasModules = false;
+  // sync version control
+  if (pkg.time && Object.keys(pkg.time).length>0) {
+    var _versionArry = Object.keys(pkg.time).sort((a, b) => {
+      return Date.parse(pkg.time[b]) - Date.parse(pkg.time[a]);
+    });
+    var _versions = {};
+    for (var i = 0; i < _versionArry.length; i++) {
+      var key = _versionArry[i];
+      var _version = pkg.versions[key]
+      if(!_version) continue;
+      _versions[key] = _version;
+      if (Object.keys(_versions).length >= config.syncLatestVersions) break;
+    }
+    pkg.versions = _versions;
+  }
   var result = yield [
     packageService.listModulesByName(name),
     packageService.listModuleTags(name),

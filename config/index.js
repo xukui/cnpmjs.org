@@ -261,7 +261,10 @@ var config = {
  * @param {String} scope.sourceCnpmRegistry source cnpm registry url for sync packages
  */
   syncScopeConfig: [],
-
+  
+  // sync package latest versions
+  syncLatestVersions: 5,
+  
   handleSyncRegistry: 'http://127.0.0.1:7001',
 
   // default badge subject
@@ -303,7 +306,7 @@ var config = {
 
   // https://github.com/cnpm/cnpmjs.org/issues/1149
   // if enable this option, must create module_abbreviated and package_readme table in database
-  enableAbbreviatedMetadata: false,
+  enableAbbreviatedMetadata: true,
 
   // enable package or package version block list, must create package_version_blocklist table in database
   enableBlockPackageVersion: false,
